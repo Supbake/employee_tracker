@@ -2,7 +2,8 @@
 
 ## Description
 
-description
+This program was created was for a manager to manage their company from the top down for their employees.
+This program will allow a manager to create departments, roles in those departments and add employess to those roles and departments. 
 
 ## Table of Contents 
 
@@ -13,14 +14,14 @@ description
 
 ## Installation
 
-install
-
+https://youtu.be/Ek0B6rGGjPk
+ 
 ## Usage
 
-fun
+This should be used to add employees to your company and assign roles to those employees 
 
 ## Credits
 
 n/a
 
-## License
+## License  

@@ -1,14 +1,20 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
+// const express = require('express');
+// const PORT = process.env.PORT || 3001;
+// const app = express();
+
+// app.use(express.urlencoded({ extended: false })); //req.body encoding
+// app.use(express.json()); //req.body json
 
 //creating connection to mysql
 const connection = mysql.createConnection(
     {
-        host: 'localhost',
-        PORT: 3001,
+        host: '127.0.0.1',
         user: 'root',
-        password: 'Google1@',
+        password: '',
         database: 'employees',
+        port: 3306,
     }
 );
 
@@ -18,6 +24,14 @@ connection.connect(function (err) {
         throw err;
     start();
 });
+
+// app.use((req, res) => {
+//     res.status(404).end();
+// });
+
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
 
 // start function that gives choices to user
 function start() {
@@ -138,20 +152,20 @@ function addDept() {
         {
             type: 'input',
             message: 'Name of Department',
-            name: 'department'
+            name: 'dept_name'
         }
     )
-    then(function (answer) {
-        console.log(answer.department);
-        connection.query("INSERT INTO department SET ?",
-            {
-                name: answer.department,
-            },
-            function (err, res) {
-                if (err) throw err;
-                start();
-            });
-    });
+        .then(function (answer) {
+            console.log(answer.department);
+            connection.query("INSERT INTO department SET ?",
+                {
+                    dept_name: answer.dept_name,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    start();
+                });
+        });
 };
 
 function addRole() {
@@ -159,12 +173,12 @@ function addRole() {
         {
             type: 'input',
             message: 'What Role would you like to Add?',
-            name: 'role'
+            name: 'title'
         },
         {
             type: 'input',
             message: 'Which Department is this Role in? ',
-            name: 'department'
+            name: 'department_id'
         },
         {
             type: 'input',
@@ -174,7 +188,7 @@ function addRole() {
     ];
     inquirer.prompt(questions).then(function (answer) {
         connection.query(
-            "INSERT INTO role SET ?",
+            "INSERT INTO roles SET ?",
             {
                 title: answer.title,
                 department_id: answer.department_id,
@@ -200,5 +214,5 @@ function updateEmp() {
             name: 'role_id',
             choices: empChoices
         })
-    connection.query('UPDATE employee SET role_id = ? WJERE employee_id = ?', [roleID, empID])
+    connection.query('UPDATE employee SET role_id = ? WHERE employee_id = ?', [roleID, empID])
 };
